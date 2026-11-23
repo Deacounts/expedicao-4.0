@@ -1,0 +1,28 @@
+{
+  "AS-IS": {
+    "pedidos": 237594,
+    "pedidos_dia": 7920,
+    "sla_pct": 91.5,
+    "perderam_corte_por_100": 8.5,
+    "lead_time_h": 5.6,
+    "itens_por_hora": 93.3,
+    "erro_pct": 0.61,
+    "conferencia_pct": 100.0,
+    "backlog_pct": 11.0,
+    "absenteismo_pct": 6.0,
+    "erros_retidos": 1229
+  },
+  "TO-BE": {
+    "pedidos": 241212,
+    "pedidos_dia": 8040,
+    "sla_pct": 99.3,
+    "perderam_corte_por_100": 0.7,
+    "lead_time_h": 2.33,
+    "itens_por_hora": 121.7,
+    "erro_pct": 0.27,
+    "conferencia_pct": 20.8,
+    "backlog_pct": 4.0,
+    "absenteismo_pct": 4.5,
+    "erros_retidos": 217
+  }
+}

@@ -1,0 +1,5 @@
+pedido_id,tipo,etapa_origem,retido_na_conferencia
+P26080100033,etiqueta,etiqueta,0
+P26080100110,etiqueta,sorting,0
+P26080100282,avaria,packing,1
+P26083100321,item_errado,picking,1
