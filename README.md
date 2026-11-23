@@ -2,6 +2,8 @@
 
 Redesenho do processo de expedição de um CD de e-commerce fictício, com um dashboard em React que compara o processo **Antes (AS-IS)** e **Depois (TO-BE)**.
 
+**Dashboard online:** https://deacounts.github.io/expedicao-4.0/
+
 O projeto junta as duas pontas: o diagnóstico de processo (BPMN, Matriz GUT, 5 Porquês, Ishikawa) e a ferramenta que acompanha o resultado.
 
 > **Todos os dados são simulados.** A empresa (LogiFlex Distribuição), as pessoas e os números são fictícios, gerados por um script Python com semente fixa. O método é o mesmo de uma operação real.
@@ -75,7 +77,7 @@ A amostra em `data/amostra/` traz 400 pedidos do primeiro dia de cada período, 
 ```bash
 npm install
 npm run dev        # http://localhost:5173
-npm run build      # gera dist/ (deploy na Vercel via vercel.json)
+npm run build      # gera dist/ (deploy automático no GitHub Pages a cada push na main)
 ```
 
 **Stack:** React 18 + Vite, Tailwind CSS 4, Recharts, Python 3 para os dados.
