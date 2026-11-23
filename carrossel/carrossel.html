@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Expedição 4.0 · carrossel</title>
+<style>
+  @page { size: 1080px 1350px; margin: 0; }
+  :root {
+    --azul: #2a78d6; --azul-esc: #1c5cab; --azul-claro: #e8f1fc;
+    --tinta: #0b0b0b; --tinta-2: #52514e; --mudo: #898781;
+    --fundo: #f6f6f3; --cartao: #ffffff; --linha: #e1e0d9;
+    --vermelho: #d03b3b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; color: var(--tinta); background: #ccc; }
+  .slide {
+    width: 1080px; height: 1350px; background: var(--fundo); position: relative; overflow: hidden;
+    padding: 96px 88px 120px; display: flex; flex-direction: column; page-break-after: always; break-after: page;
+  }
+  .topo { display: flex; justify-content: space-between; align-items: center; font-size: 24px; color: var(--mudo); font-weight: 600; letter-spacing: .02em; }
+  .topo .marca { display: flex; align-items: center; gap: 14px; }
+  .logo { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; }
+  .rodape { position: absolute; left: 88px; right: 88px; bottom: 56px; display: flex; justify-content: space-between; font-size: 22px; color: var(--mudo); }
+  .rodape .seta { color: var(--azul); font-weight: 600; }
+  .tag { display: inline-block; font-size: 24px; font-weight: 700; color: var(--azul); text-transform: uppercase; letter-spacing: .08em; margin-top: 64px; }
+  h1 { font-size: 76px; line-height: 1.08; font-weight: 700; letter-spacing: -.02em; margin-top: 20px; }
+  h2 { font-size: 60px; line-height: 1.1; font-weight: 700; letter-spacing: -.015em; margin-top: 18px; }
+  p.lead { font-size: 34px; line-height: 1.4; color: var(--tinta-2); margin-top: 28px; }
+  .azul { color: var(--azul); }
+  .verm { color: var(--vermelho); }
+  .cartao { background: var(--cartao); border: 2px solid var(--linha); border-radius: 28px; padding: 36px 40px; }
+  .num-gigante { font-size: 260px; font-weight: 800; line-height: 1; letter-spacing: -.04em; color: var(--vermelho); }
+  .fluxo { display: grid; gap: 14px; margin-top: 44px; }
+  .etapa { display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 20px; background: var(--cartao); border: 2px solid var(--linha); border-radius: 20px; padding: 18px 24px; font-size: 30px; }
+  .etapa .n { width: 52px; height: 52px; border-radius: 50%; background: #f0efec; display: grid; place-items: center; font-weight: 700; font-size: 26px; color: var(--tinta-2); }
+  .etapa.ruim { border-color: var(--vermelho); }
+  .etapa.ruim .n { background: var(--vermelho); color: #fff; }
+  .etapa.bom { border-color: var(--azul); }
+  .etapa.bom .n { background: var(--azul); color: #fff; }
+  .etapa .nota { font-size: 22px; font-weight: 700; padding: 6px 14px; border-radius: 999px; white-space: nowrap; }
+  .ruim .nota { color: var(--vermelho); background: #fbe9e9; }
+  .bom .nota { color: var(--azul-esc); background: var(--azul-claro); }
+  .decisao { margin-left: 84px; font-size: 24px; color: var(--tinta-2); border-left: 4px dashed var(--azul); padding: 6px 0 6px 22px; }
+  .gut { display: grid; gap: 16px; }
+  .gut-linha { display: grid; grid-template-columns: 1fr 340px 70px; align-items: center; gap: 20px; font-size: 28px; }
+  .barra { height: 22px; border-radius: 6px; background: #f0efec; }
+  .barra > div { height: 22px; border-radius: 6px; background: var(--azul); }
+  .porques { display: grid; gap: 10px; font-size: 27px; color: var(--tinta-2); }
+  .porques li { list-style: none; display: grid; grid-template-columns: 44px 1fr; gap: 12px; line-height: 1.3; align-items: center; }
+  .porques li b { color: var(--tinta); }
+  .porques .k { width: 36px; height: 36px; border-radius: 50%; background: #e6e5e0; display: grid; place-items: center; font-size: 20px; font-weight: 700; }
+  .raiz { margin-top: 26px; border-left: 8px solid var(--vermelho); background: var(--cartao); border-radius: 16px; padding: 24px 28px; font-size: 32px; line-height: 1.35; }
+  .kpis { display: grid; gap: 22px; margin-top: 44px; }
+  .kpi { display: grid; grid-template-columns: 1fr auto; align-items: center; background: var(--cartao); border: 2px solid var(--linha); border-radius: 24px; padding: 30px 36px; }
+  .kpi .rot { font-size: 30px; color: var(--tinta-2); line-height: 1.25; }
+  .kpi .rot small { display: block; font-size: 22px; color: var(--mudo); margin-top: 4px; }
+  .kpi .val { display: flex; align-items: baseline; gap: 18px; font-variant-numeric: tabular-nums; }
+  .kpi .antes { font-size: 38px; color: var(--mudo); text-decoration: line-through; text-decoration-thickness: 2px; }
+  .kpi .depois { font-size: 68px; font-weight: 800; color: var(--azul); letter-spacing: -.02em; }
+  .print { margin-top: 40px; border-radius: 24px; overflow: hidden; border: 2px solid var(--linha); box-shadow: 0 24px 60px rgba(0,0,0,.12); }
+  .print img { display: block; width: 100%; }
+  .licoes { display: grid; gap: 22px; margin-top: 40px; }
+  .licao { display: grid; grid-template-columns: 64px 1fr; gap: 20px; font-size: 31px; line-height: 1.35; color: var(--tinta-2); }
+  .licao b { color: var(--tinta); }
+  .licao .k { width: 56px; height: 56px; border-radius: 16px; background: var(--azul); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 28px; }
+  .links { margin-top: auto; margin-bottom: 20px; display: grid; gap: 14px; font-size: 28px; }
+  .links div { background: var(--cartao); border: 2px solid var(--linha); border-radius: 18px; padding: 20px 26px; display: flex; justify-content: space-between; gap: 20px; }
+  .links span { color: var(--mudo); }
+  .links b { color: var(--azul-esc); }
+  .capa { background: linear-gradient(160deg, #0d366b 0%, #1c5cab 55%, #2a78d6 100%); color: #fff; }
+  .capa .topo, .capa .rodape { color: rgba(255,255,255,.75); }
+  .capa .topo .marca { color: #fff; }
+  .capa .logo { background: rgba(255,255,255,.18); }
+  .capa h1 { font-size: 92px; margin-top: auto; }
+  .capa p.lead { color: rgba(255,255,255,.85); }
+  .capa .rodape .seta { color: #fff; }
+  .chips { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 40px; margin-bottom: 40px; }
+  .chips span { font-size: 24px; padding: 10px 20px; border-radius: 999px; border: 2px solid rgba(255,255,255,.4); }
+</style>
+</head>
+<body>
+
+<section class="slide capa">
+  <div class="topo"><div class="marca"><div class="logo"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M2 16V6h12v10M14 9h4l3 4v3h-2"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></div>Expedição 4.0</div><span>Projeto de portfólio</span></div>
+  <h1>Como eu redesenharia a expedição de um CD para parar de perder o horário de corte</h1>
+  <p class="lead">Processos Gerenciais + desenvolvimento front-end, do diagnóstico ao dashboard.</p>
+  <div class="chips"><span>BPMN</span><span>Matriz GUT</span><span>5 Porquês</span><span>Ishikawa</span><span>Python</span><span>React</span></div>
+  <div class="rodape"><span>Dados simulados</span><span class="seta">Arraste →</span></div>
+</section>
+
+<section class="slide">
+  <div class="topo"><span>Expedição 4.0</span><span>02 / 08</span></div>
+  <span class="tag">O problema</span>
+  <div class="num-gigante" style="margin-top:56px">8,5</div>
+  <h2>em cada 100 pedidos perdiam o caminhão da transportadora.</h2>
+  <p class="lead">Num CD de e-commerce fictício com <b>8.000 pedidos por dia</b>, isso dá cerca de <b>680 pedidos por dia</b> que só saem no dia seguinte. O cliente sente o atraso.</p>
+  <div class="cartao" style="margin-top:auto; margin-bottom:20px; font-size:28px; color:var(--tinta-2); line-height:1.4">
+    <b style="color:var(--tinta)">Horário de corte:</b> a hora em que o caminhão sai. Pedido pronto depois disso fica para amanhã.
+  </div>
+  <div class="rodape"><span>LogiFlex Distribuição (fictícia)</span><span class="seta">→</span></div>
+</section>
+
+<section class="slide">
+  <div class="topo"><span>Expedição 4.0</span><span>03 / 08</span></div>
+  <span class="tag">Processo atual (AS-IS)</span>
+  <h2>8 etapas em fila. Em <span class="verm">vermelho</span>, onde o pedido fica parado.</h2>
+  <div class="fluxo">
+    <div class="etapa ruim"><span class="n">1</span>Liberar ondas fixas a cada 2h<span class="nota">ignora o corte</span></div>
+    <div class="etapa ruim"><span class="n">2</span>Picking por ordem de pedido<span class="nota">rota longa</span></div>
+    <div class="etapa ruim"><span class="n">3</span>Consolidar itens na bancada<span class="nota">espera</span></div>
+    <div class="etapa"><span class="n">4</span>Packing (caixa escolhida no olho)<span></span></div>
+    <div class="etapa ruim"><span class="n">5</span>Conferência de 100% dos pedidos<span class="nota">gargalo</span></div>
+    <div class="etapa ruim"><span class="n">6</span>Etiqueta em impressora compartilhada<span class="nota">fila</span></div>
+    <div class="etapa"><span class="n">7</span>Sorting manual por rota<span></span></div>
+    <div class="etapa"><span class="n">8</span>Carregar o caminhão<span></span></div>
+  </div>
+  <div class="rodape"><span>Mapeado em BPMN, com raias por função</span><span class="seta">→</span></div>
+</section>
+
+<section class="slide">
+  <div class="topo"><span>Expedição 4.0</span><span>04 / 08</span></div>
+  <span class="tag">Diagnóstico</span>
+  <h2 style="font-size:54px">Matriz GUT para priorizar, 5 Porquês para achar a causa.</h2>
+  <div class="cartao" style="margin-top:36px">
+    <div class="gut">
+      <div class="gut-linha"><b>Perder o horário de corte</b><div class="barra"><div style="width:100%;background:var(--vermelho)"></div></div><b style="text-align:right">100</b></div>
+      <div class="gut-linha"><span>Item errado ou faltando</span><div class="barra"><div style="width:60%"></div></div><span style="text-align:right">60</span></div>
+      <div class="gut-linha"><span>Conferência 100% refaz o picking</span><div class="barra"><div style="width:48%"></div></div><span style="text-align:right">48</span></div>
+    </div>
+  </div>
+  <ul class="porques" style="margin-top:30px">
+    <li><span class="k">1</span><span><b>Por que perdem o corte?</b> Chegam na doca atrasados.</span></li>
+    <li><span class="k">2</span><span><b>Por quê?</b> Ficam parados na conferência e na consolidação.</span></li>
+    <li><span class="k">3</span><span><b>Por quê?</b> As ondas jogam um pico de pedidos de uma vez.</span></li>
+    <li><span class="k">4</span><span><b>Por quê?</b> São fixas e ignoram o corte de cada transportadora.</span></li>
+    <li><span class="k" style="background:var(--vermelho);color:#fff">5</span><span><b>Por quê?</b> Não existe regra de prioridade por corte.</span></li>
+  </ul>
+  <div class="raiz"><b>Causa raiz:</b> a regra de liberação dos pedidos, não o ritmo das pessoas.</div>
+  <div class="rodape"><span>+ Ishikawa (6M) no estudo de caso</span><span class="seta">→</span></div>
+</section>
+
+<section class="slide">
+  <div class="topo"><span>Expedição 4.0</span><span>05 / 08</span></div>
+  <span class="tag">Processo novo (TO-BE)</span>
+  <h2>7 etapas, 1 decisão e 3 mudanças principais em <span class="azul">azul</span>.</h2>
+  <div class="fluxo">
+    <div class="etapa bom"><span class="n">1</span>Ondas dinâmicas: primeiro o caminhão que sai antes<span class="nota">a cada 15 min</span></div>
+    <div class="etapa bom"><span class="n">2</span>Picking por zona, com rota por endereço<span class="nota">menos caminhada</span></div>
+    <div class="etapa"><span class="n">3</span>Packing com caixa sugerida pelo sistema<span></span></div>
+    <div class="decisao">◆ O pedido tem risco de erro? (4+ itens, valor alto, separador novo)</div>
+    <div class="etapa bom"><span class="n">4</span>Conferência só dos pedidos de risco<span class="nota">~20% dos pedidos</span></div>
+    <div class="etapa"><span class="n">5</span>Etiqueta impressa no próprio posto<span></span></div>
+    <div class="etapa"><span class="n">6</span>Sorting por cor de rota<span></span></div>
+    <div class="etapa"><span class="n">7</span>Carregar o caminhão<span></span></div>
+  </div>
+  <div class="rodape"><span>+ painel de SLA por hora para o líder do turno</span><span class="seta">→</span></div>
+</section>
+
+<section class="slide">
+  <div class="topo"><span>Expedição 4.0</span><span>06 / 08</span></div>
+  <span class="tag">Resultado · 30 dias antes × 30 dias depois</span>
+  <h2>Conferindo menos, o erro caiu pela metade.</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="rot">Pedidos no prazo (SLA)<small>meta ≥ 98%</small></div><div class="val"><span class="antes">91,5%</span><span class="depois">99,3%</span></div></div>
+    <div class="kpi"><div class="rot">Pedidos com erro<small>meta ≤ 0,3%</small></div><div class="val"><span class="antes">0,61%</span><span class="depois">0,27%</span></div></div>
+    <div class="kpi"><div class="rot">Pedidos conferidos<small>meta 15% a 25%</small></div><div class="val"><span class="antes">100%</span><span class="depois">21%</span></div></div>
+    <div class="kpi"><div class="rot">Tempo do pedido no CD<small>meta ≤ 4 h</small></div><div class="val"><span class="antes">5,6 h</span><span class="depois">2,3 h</span></div></div>
+  </div>
+  <p class="lead" style="font-size:28px">Nem tudo bateu a meta: o backlog na troca de turno caiu de 11% para 4%, e a meta era 2%.</p>
+  <div class="rodape"><span>Dados simulados em Python (478 mil pedidos)</span><span class="seta">→</span></div>
+</section>
+
+<section class="slide">
+  <div class="topo"><span>Expedição 4.0</span><span>07 / 08</span></div>
+  <span class="tag">A ferramenta</span>
+  <h2>Um dashboard em React para acompanhar o processo novo.</h2>
+  <p class="lead" style="font-size:30px">Antes × Depois lado a lado, filtros por turno e transportadora, e o estudo de caso completo no mesmo link.</p>
+  <div class="print"><img src="print-dashboard.png" alt="Tela do dashboard Expedição 4.0"></div>
+  <div class="rodape"><span>React · Tailwind · Recharts · Python</span><span class="seta">→</span></div>
+</section>
+
+<section class="slide">
+  <div class="topo"><span>Expedição 4.0</span><span>08 / 08</span></div>
+  <span class="tag">Aprendizados</span>
+  <h2>3 lições que levo do projeto</h2>
+  <div class="licoes">
+    <div class="licao"><span class="k">1</span><span><b>O gargalo raramente é a pessoa.</b> Quase sempre é a regra que decide o que entra no fluxo, e quando.</span></div>
+    <div class="licao"><span class="k">2</span><span><b>Mais controle nem sempre é mais qualidade.</b> Conferir tudo criou fila, e a fila fazia o erro passar.</span></div>
+    <div class="licao"><span class="k">3</span><span><b>Medir por hora muda a reação.</b> Quem só vê o resultado no fim do turno já não tem o que fazer.</span></div>
+  </div>
+  <div class="links">
+    <div><span>Dashboard</span><b>{{SITE}}</b></div>
+    <div><span>Código</span><b>{{REPO}}</b></div>
+  </div>
+  <div class="rodape"><span>Links também nos comentários</span><span>Dados simulados</span></div>
+</section>
+
+<script>
+  // carrossel.html#3 mostra só o slide 3 (para gerar PNG); sem # mostra todos (PDF)
+  const n = Number(location.hash.slice(1))
+  if (n) document.querySelectorAll('.slide').forEach((s, i) => { if (i !== n - 1) s.style.display = 'none' })
+</script>
+</body>
+</html>
